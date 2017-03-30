@@ -1,0 +1,137 @@
+<!--
+    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
+    siblings. When this component is run from its own repo (e.g. tests, examples), we assume the server is started with
+    'grunt depserve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
+-->
+<link rel="import" href="../polymer/polymer.html"/>
+
+
+<!--
+Element providing a progress bar, which can optionally include stripes and an animation effect
+
+##### Usage
+
+    <px-progress-bar value="50"></px-progress-bar>
+
+### Styling
+The following custom properties and mixins are also available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--px-progress-bar-height` | Height of the progress bar element | `20px`
+`--px-progress-bar-fill-color` | Color of the filled portion of the bar | `$select-blue-default`
+`--px-progress-bar-stripe-color` | Color of the stripes | `$select-blue-hover`
+`--px-progress-bar-background-color` | Color of the unfilled portion of the bar | `$gray3`
+
+@element px-progress-bar
+@blurb Element providing a progress bar.
+@homepage index.html
+@demo demo.html
+
+-->
+
+<link rel="import" href="css/px-progress-bar-styles.html">
+
+<dom-module id="px-progress-bar">
+  <template>
+    <style include="px-progress-bar-styles"></style>
+    
+
+    <div id="background" class="background">
+      <div id="fill" class="fill">
+        <div id="filleffect" class="filleffect"></div>
+      </div>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'px-progress-bar',
+
+
+    properties: {
+      /**
+       * Represents the value (from 0 to 100) of the percentage progress.
+       * @property value
+       * @type Number
+       * @default 0
+       * @notify true
+       * @observer _updateProgress
+       */
+      value: {
+        type: Number,
+        value: 0,
+        notify: true,
+        observer: '_updateProgress'
+      },
+      /**
+       * Internal property for calculating the ratio (from 0 to 1) for sizing
+       * elements within the component - also clips negative values and values
+       * greater than 100 in its compute function.
+       * @property _ratio
+       * @type Number
+       * @computed _computeRatio(value)
+       */
+      _ratio: {
+        type: Number,
+        computed: '_computeRatio(value)'
+      },
+      /**
+       * Flag for whether to display a striped effect over the progress bar.
+       * @property striped
+       * @type Boolean
+       * @default false
+       * @observer ready
+       */
+      striped: {
+        type: Boolean,
+        value: false,
+        observer: 'ready'
+      },
+      /**
+       * Flag for whether to animate the stripes.
+       * @property animated
+       * @type Boolean
+       * @default false
+       * @observer ready
+       */
+      animated: {
+        type: Boolean,
+        value: false,
+        observer: 'ready'
+      }
+    },
+     /**
+     * Function to transform the filled portion of the progress bar.
+     * Also performs the opposite transform on the child item to
+     * keep the stripes proportional.
+     * @method _updateProgress
+     */
+    _updateProgress: function() {
+      var transform = 'scaleX(' + this._ratio + ')';
+      this.$.fill.style.transform = this.$.fill.style.webkitTransform = transform;
+      transform = 'scaleX(' + 1 / this._ratio + ')';
+      this.$.filleffect.style.transform = this.$.filleffect.style.webkitTransform = transform;
+    },
+    /**
+    * Function to compute the ratio based on the value.
+    * Also clips values that are out of range (0 to 100).
+    * @method _computeRatio
+    */
+    _computeRatio: function(value) {
+      return value < 0 ? 0 : (value > 100 ? 1 : value / 100);
+    },
+    /**
+    * Ready function, to toggle the proper classes based on config properties.
+    * @method ready
+    */
+    ready: function() {
+      this.toggleClass('striped',this.striped,this.$.filleffect);
+      this.toggleClass('animated',this.animated,this.$.filleffect);
+    }
+
+
+  });
+</script>

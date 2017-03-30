@@ -1,0 +1,155 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import"
+	href="../../bower_components/px-sample-cards/blank-card.html">
+<link rel="import"
+	href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import"
+	href="../../bower_components/px-spinner/px-spinner.html">
+<link rel="import"
+	href="../../bower_components/px-dropdown/px-dropdown.html">
+<link rel="import"
+	href="../../bower_components/px-dropdown/px-dropdown-content.html">
+<link rel="import"
+	href="../../bower_components/px-progress-bar/px-progress-bar.html">
+<link rel="import"
+	href="../../bower_components/px-vis-pie-chart/px-vis-pie-chart.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<link rel="import"
+	href="../../bower_components/px-data-table/px-data-table.html">
+<link rel="import"
+	href="../../bower_components/px-data-table/px-data-table.html">
+<link rel="import"
+	href="../../bower_components/px-context-browser/px-context-browser.html">
+<link rel="import"
+	href="../../bower_components/px-deck-selector/px-deck-selector.html">
+<link rel="import"
+	href="../../bower_components/px-file-upload/px-file-upload.html">
+<link rel="import"
+	href="../../bower_components/px-simple-horizontal-bar-chart/px-simple-horizontal-bar-chart.html">
+	
+<link rel="import" href="../../bower_components/px-spinner/px-spinner.html"/>
+<!-- Jquerry -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- Bootstrap -->
+<!-- <link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script> -->
+
+<!-- Load c3.css -->
+<link href="../../library/c3.css" rel="stylesheet" type="text/css">
+
+<!-- Load d3.js and c3.js -->
+<script src="../../bower_components/d3/d3.min.js" charset="utf-8"></script>
+<script src="../../library/c3.min.js"></script>
+
+
+	
+<style>
+
+.sub-left {
+   width:10%;
+   float: left;
+}
+.sub-right {
+   width : 100%;
+   float: right;
+}
+
+
+.sub-final{
+    width : 100%;
+}
+
+div {
+	padding : 5px;
+}
+#chart{
+	max-height: 100% !important;
+}
+.button {
+	padding: 15px 32px;
+}
+
+.chart-div{
+  display: none;
+}
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+  z-index: 1;
+}
+
+.darkClass
+{
+    background-color: white;
+    filter:alpha(opacity=50); /* IE */
+    opacity: 0.5; /* Safari, Opera */
+    -moz-opacity:0.50; /* FireFox */
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    background-repeat:no-repeat;
+    background-position:center;
+    position:absolute;
+    top: 0px;
+    left: 0px;
+	display: none;
+}
+
+
+
+</style>
+<dom-module id="blankpage-view"> <template> <h1 style="text-align: center;color: white">Entity Identifier</h1> 
+	<px-card class="sub-final">
+	    <div class = "sub-left">
+		<textarea id = "submitText"rows="4" cols="50">		
+		</textarea>
+		<div>
+			<button class = "button" type="button" id="myBtn" onclick="clickHandler()"><b>Submit</b></button>
+		</div>
+		</div>
+		<div class ="sub-right">
+		  <div id="chart"></div>
+		   <div class="chart-div">No valid entity found</div>
+		</div>
+		<div style="clear:both"></div>
+	</px-card>
+</template>
+
+<script src="../script/coreFile.js"></script>
+<script src="../script/cloud.js"></script>
+
+<script>
+
+	//console.log(ary2[1]["MaxLoad"])	 
+	//window.alert(ary[0].y)		
+	Polymer({
+		is : 'blankpage-view',
+		properties : {
+			valueserve : {
+				type : Array,
+				value : function() {
+					return bvalue
+				}
+			},
+			datatab : {
+				type : Array,
+				value : function() {
+					return ary2
+				}
+			},
+			headerserve : {
+				type : Array,
+				value : function() {
+					return bheader
+				}
+			},
+		ready : function() {
+			//getData();
+		}
+		}
+	});
+</script> </dom-module>

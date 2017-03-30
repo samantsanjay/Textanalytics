@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>px-simple-bar-chart Demo</title>
+  <link rel="stylesheet" type="text/css" href="css/px-simple-bar-chart-demo.css" />
+  <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
+  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../px-theme/px-theme-styles.html">
+  <style include="px-theme-styles" is="custom-style"></style>
+
+  <link rel="import" href="../iron-ajax/iron-ajax.html" />
+  <link rel="import" href="../px-api-viewer/px-api-viewer.html" />
+  <link rel="import" href="../px-tabs/px-tab-set.html" />
+  <link rel="import" href="../px-dropdown/px-dropdown.html" />
+  <link rel="import" href="px-simple-bar-chart.html" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <link rel="import" href="../px-demo-snippet/px-demo-snippet.html">
+  <link rel="import" href="../px-polymer-font-awesome/polymer-font-awesome.html" />
+  <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
+
+</head>
+
+<body>
+
+  <!-- Wrap elements with auto-binding template to -->
+  <!-- allow use of Polymer bindings in main document -->
+  <template id="just-for-demo" is="dom-bind">
+
+    <!-- discription -->
+    <div class="hero u-p++ text--shadow">
+      <a class="actionable flex flex--right flex--middle" href="https://github.com/PredixDev/px-simple-bar-chart" target="_blank">
+        <iron-icon class="menu__open" icon="fa:fa-github"></iron-icon>View on Github
+      </a>
+      <h1 class="delta">px-simple-bar-chart</h1>
+      <div class="description-text">
+          <p>
+           Use this component to visualize a series or multiple series of numeric values as a bar chart or stacked bar chart.
+            Each series is represented by a sequence of horizontally aligned rectangle bars, the height of each proportionally
+            representing a value.
+          </p>
+          <p>
+             It uses the data visualization color palette by default, but this can be overridden with configuration. The height and
+             width are configurable, as are the legend labels – if none are provided, the legend will not be shown.
+             We recommend using the default settings as they are designed for proper performance.
+          </p>
+       </div>
+      <div class="flex">
+        <img class="u-mr-- " src="https://img.shields.io/travis/PredixDev/px-simple-bar-chart.svg?style=flat-square" alt="Travis"  onerror="this.style.display='none'"/>
+        <img class="u-mr--" src="https://img.shields.io/bower/v/px-simple-bar-chart.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'" />
+        <img class="u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/px-simple-bar-chart.svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" />
+      </div>
+    </div>
+
+    <!-- mega demo -->
+    <div style="position: relative;" class="u-pb++ flex flex--col" id="defaultTab">
+      <div class="tabContainer u-pt++ u-pl++">
+        <px-tab-set selected="{{selected}}" bare no-bottom-border>
+          <template is="dom-repeat" items="{{optionsArray}}">
+            <px-tab>Option {{indexPlusOne(index)}}</px-tab>
+          </template>
+        </px-tab-set>
+      </div>
+      <px-tab-pages selected="{{selected}}">
+        <template is="dom-repeat" items="{{optionsArray}}">
+          <section class="tab-page">
+            <div class="mega-demo flex u-ph++ u-pb++">
+              <!-- Properties -->
+              <div class="properties u-ph+ u-pb+ u-mt+">
+                <p class="epsilon">Properties</p>
+                <div class="u-mb-">Width:
+                  <input id="width{{indexPlusOne(index)}}" class="text-input" type="text" placeholder="{{item.width}}" value="{{item.width::input}}" />
+                </div>
+                <div class="u-mb-">Height:
+                  <input id="height{{indexPlusOne(index)}}" class="text-input" type="text" placeholder="{{item.height}}" value="{{item.height::input}}" />
+                </div>
+                <div class="u-mb-">Legend Order:
+                  <div style="width: 100%;">
+                    <px-dropdown id="legendOrder{{indexPlusOne(index)}}" value="{{item.legendOrder}}" display-value="{{item.legendOrder}}" bound-target="properties">
+                      <px-dropdown-content
+                        items='[
+                          {"key":"one", "val": "reverse"},
+                          {"key":"two", "val": ""}]'>
+                      </px-dropdown-content>
+                    </px-dropdown>
+                  </div>
+                </div>
+              </div>
+
+              <div class="demoContainer u-mt+">
+                <!-- demo -->
+                <div class="flex flex--col">
+                  <div class="demo u-p+">
+
+                      <px-simple-bar-chart
+                        id="demo{{indexPlusOne(index)}}"
+                        chart-data="{{item.chartData}}"
+                        width="{{item.width}}"
+                        height="{{item.height}}"
+                        legend-labels="{{item.legendLabels}}"
+                        colors="{{item.colors}}"
+                        legend-order="{{item.legendOrder}}">
+                      </px-simple-bar-chart>
+
+                  </div>
+                  <div>
+                    <px-demo-snippet
+                      element-properties={{item}}
+                      element-name="px-simple-bar-chart"
+                      scripts-includes="[[scriptsIncludes]]"
+                      >
+                    </px-demo-snippet>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="apiContainer">
+            <div class="flex flex--col api u-mt++" >
+              <div>
+                <px-api-viewer source="px-simple-bar-chart"></px-api-viewer>
+              </div>
+            </div>
+          </div>
+        </section>
+      </template>
+    </px-tab-pages>
+    </div>
+    <footer class="footer flex flex--center">
+      <div class="footer__container u-pv++">
+        <div>
+          <a href="https://ge.com/digital" >
+            <img src="monogram-wdmk.png" alt="GE Monogram" class="footer__img">
+          </a>
+        </div>
+        <div class="footer__list">
+          <ul class="list-inline list-inline--delimited">
+            <li>
+              <a href="http://predix.io/legal" class="footer__list--lnk">Legal</a>
+            </li>
+            <li>
+              <a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a>
+            </li>
+            <li>Copyright &copy; 2016 General Electric Company. All rights reserved.</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </template>
+  <script>
+    window.addEventListener('WebComponentsReady', function() {
+
+      var template = document.querySelector('template[is=dom-bind]'),
+          chartData = [
+            [
+              [102, 80, 63, 127, 102, 77, 57, 71, 106, 78, 129],
+              [103, 55, 54, 103, 89, 56, 74, 52, 67, 110, 93],
+              [128, 119,  71,  74,  98,  87, 114,  67,  67,  62, 104],
+              [92,  64,  88, 121,  61,  55, 115, 110,  78, 129, 119],
+              [102,  83, 106,  58, 102,  62,  58,  67,  75, 113, 120],
+              [68, 129,  94,  58,  53, 117,  96,  87,  97,  70, 108],
+              [109, 109, 104, 104, 121,  86,  97,  51,  73, 100,  74],
+              [112,  57,  53, 122, 128, 120,  56,  94,  72, 110, 102]
+            ],
+            [
+              [112,  57,  53, 122, 128, 120,  56,  94,  72, 110, 102]
+            ]
+          ],
+          width=["auto","300"],
+          height= ["350","200"],
+          legendLabels= [
+            ["Lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit", "praesent", "sed", "purus", "non", "est", "posuere", "dapibus", "ut", "at", "purus", "suspendisse"],
+            ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]
+            ],
+          colors = [
+                      ["#5da5da", "#faa43a", "#60bd68", "#f17cb0", "#b2912f", "#b276b2", "#decf3f", "#f15854", "#4d4d4d"],
+                      ["#A8E6CE", "#FFAAA6", "#FFD3B5", "#FF8C94","#DCEDC2"],
+                      ["#3E7B7C", "#7EA593", "#7EA593", "#DBB793", "#EE8568", "#957673", "#CC5E4F"]
+                    ];
+          legendOrder=["sequential","reverse"],
+          optionsArray = [
+            {
+              "width": width[0],
+              "height": height[0],
+              "chartData": chartData[0],
+              "legendLabels": legendLabels[1],
+              "colors": colors[0],
+              "legendOrder": legendOrder[0]
+            },
+            {
+              "width": width[1],
+              "height": height[1],
+              "chartData": chartData[1],
+              "legendLabels": legendLabels[10],
+              "colors": colors[1],
+              "legendOrder": "reverse"
+            },
+            {
+              "width": width[1],
+              "height": height[1],
+              "chartData": chartData[0],
+              "legendLabels": legendLabels[0],
+              "colors": colors[2],
+              "legendOrder": "reverse"
+            }
+          ],
+          indexPlusOne = function(num) {
+            return num + 1;
+          };
+
+          template.selected = "0";
+          template.optionsArray = optionsArray;
+          template.indexPlusOne = indexPlusOne;
+
+          template.scriptsIncludes = ['https://d3js.org/d3.v3.min.js'];
+
+    });
+  </script>
+
+</body>
+
+</html>

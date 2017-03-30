@@ -1,0 +1,16 @@
+{
+  "name": "px-demo-data",
+  "version": "0.0.20",
+  "authors": [
+    "GE"
+  ],
+  "description": "sample test data",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,0 +1,21 @@
+<html>
+<script type="text/javascript" src = "../../angular.min.js"></script>
+<script type="text/javascript" src = "main-controller.js"></script>
+<body ng-controller="mainCtrl as MainController">
+<table>
+<table>
+    <thead>
+      <tr><th>Drivers Championship Standings</th></tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="driver in driversList">
+        <td>
+          {{driver.points}}
+        </td>
+        <td>{{driver.nationality}}</td>
+        <td>{{driver.points}}</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

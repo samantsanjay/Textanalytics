@@ -1,0 +1,60 @@
+{
+  "name": "px-view-header",
+  "version": "0.2.2",
+  "main": [
+    "px-view-header.html"
+  ],
+  "ignore": [
+    ".*",
+    "npm-debug.log",
+    "gulpfile.js",
+    "sass",
+    "bower_components",
+    "node_modules",
+    "test",
+    "OSS_Notice.pdf",
+    "scripts",
+    ".github",
+    "px-view-header.png",
+    "LICENSE.md",
+    "CONTRIBUTING.md",
+    "HISTORY.md",
+    "README.md",
+    ".jshintrc",
+    ".editorconfig"
+  ],
+  "dependencies": {
+    "polymer": "^1.6.0",
+    "px-theme": "^2.0.2",
+    "px-buttons-design": "^1.1.2",
+    "px-deck-selector": "^1.6.1",
+    "px-headings-design": "^0.3.1"
+  },
+  "devDependencies": {
+    "px-forms-design": "^1.1.1",
+    "px-tables-design": "^1.1.1",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.2.5",
+    "px-polymer-font-awesome": "^1.1.0",
+    "px-tabs": "^0.6.0",
+    "px-api-viewer": "^0.1.13",
+    "px-demo-snippet": "^0.6.14",
+    "px-list-inline-design": "^0.3.1",
+    "px-toggle-design": "^1.1.1",
+    "px-actionable-text-icons-design": "^1.1.1",
+    "px-code-design": "^1.1.1",
+    "px-list-bare-design": "^0.3.1",
+    "px-meta-lists-design": "^0.4.0",
+    "px-dropdown": "^2.1.0",
+    "px-starter-kit-design": "^0.7.0"
+  },
+  "homepage": "https://github.com/PredixDev/px-view-header",
+  "_release": "0.2.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.2",
+    "commit": "c77047ff954b930f3b3ab4dfeaba3397aa512b64"
+  },
+  "_source": "https://github.com/PredixDev/px-view-header.git",
+  "_target": "^0.2.0",
+  "_originalSource": "px-view-header"
+}

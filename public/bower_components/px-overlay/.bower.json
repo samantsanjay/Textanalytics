@@ -1,0 +1,52 @@
+{
+  "name": "px-overlay",
+  "version": "0.4.2",
+  "main": [
+    "px-overlay.html"
+  ],
+  "ignore": [
+    ".*",
+    "npm-debug.log",
+    "gulpfile.js",
+    "sass",
+    "bower_components",
+    "node_modules",
+    "test",
+    "OSS_Notice.pdf",
+    "scripts",
+    ".github",
+    "px-overlay.png"
+  ],
+  "dependencies": {
+    "polymer": "^1.6.0",
+    "px-theme": "^2.0.1"
+  },
+  "devDependencies": {
+    "px-starter-kit-design": "^0.7.0",
+    "px-forms-design": "^1.1.0",
+    "px-tables-design": "^1.1.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#~1.2.3",
+    "px-polymer-font-awesome": "^1.1.0",
+    "px-tabs": "^0.6.0",
+    "px-api-viewer": "^0.1.0",
+    "px-demo-snippet": "^0.6.9",
+    "px-actionable-text-icons-design": "^1.1.0",
+    "px-code-design": "^1.1.0",
+    "px-headings-design": "^0.3.0",
+    "px-list-inline-design": "^0.3.0",
+    "px-dropdown": "^2.1.0",
+    "px-spacing-design": "^0.4.0",
+    "px-toggle-design": "^1.1.0",
+    "px-buttons-design": "^1.1.0"
+  },
+  "homepage": "https://github.com/predixDev/px-overlay",
+  "_release": "0.4.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.4.2",
+    "commit": "a38a2664d6e348d1d96d9b7c856e2935872a8559"
+  },
+  "_source": "https://github.com/predixDev/px-overlay.git",
+  "_target": "^0.4.0",
+  "_originalSource": "px-overlay"
+}

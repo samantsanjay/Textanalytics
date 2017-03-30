@@ -1,0 +1,216 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-sample-cards/blank-card.html">
+<link rel="import" href="../../bower_components/px-view-header/px-view-header.html">
+<link rel="import" href="../../bower_components/px-spinner/px-spinner.html">
+<link rel="import" href="../../bower_components/px-dropdown/px-dropdown.html">
+<link rel="import" href="../../bower_components/px-dropdown/px-dropdown-content.html">
+<link rel="import" href="../../bower_components/px-progress-bar/px-progress-bar.html">
+<link rel="import" href="../../bower_components/px-vis-pie-chart/px-vis-pie-chart.html">
+<link rel="import" href="../../bower_components/px-card/px-card.html">
+<link rel="import" href="../../bower_components/px-data-table/px-data-table.html">
+<link rel="import" href="../../bower_components/px-data-table/px-data-table.html">
+<link rel="import" href="../../bower_components/px-context-browser/px-context-browser.html">
+<link rel="import" href="../../bower_components/px-deck-selector/px-deck-selector.html">
+<link rel="import" href="../../bower_components/px-file-upload/px-file-upload.html">
+<link rel="import" href="../../bower_components/px-simple-horizontal-bar-chart/px-simple-horizontal-bar-chart.html">
+<dom-module id="blankpage-view">
+  <template>	
+<px-view-header title="Sample App"></px-view-header>
+<px-card>
+<div style="width: 150px;">
+<px-dropdown id = "countyName" display-value="[[disName]]" selected-key="1" width = "200px"><px-dropdown-content extend-dropdown='true' extend-dropdown-by='25' max-cont-character-width='10' items='[[dropDownVal]]' onclick = "downdownHandler()"></px-dropdown-content></px-dropdown>
+<button  type="button" id="myBtn" onclick="sortData()">click me</button>
+</div>
+<br>
+<px-simple-horizontal-bar-chart id = "barChart" chart-data='[[valueserve]]' width="auto" height="200px" legend-labels='[[headerserve]]' bar-labels="values" ></px-simple-horizontal-bar-chart>
+
+
+<px-data-table id = "tableData" table-data ='[[datatab]]'></px-data-table>
+
+
+</px-card>table-data
+
+  </template>
+   <!-- <script src="require.js"></script> -->
+   <script>
+   var jsonData;
+   var mainJsonData;
+   var ary2=[];
+   var bvalue=[];
+   var bheader=[];
+   var dropDownValue = [];
+   var displayName = "";
+   var init = true;
+function reqListener (data) {
+  if (typeof data != 'undefined' && (data instanceof Array)){
+	jsonData = data;
+	init = false;
+  }else{
+	jsonData = JSON.parse(this.responseText);
+	mainJsonData = Object(jsonData);
+  }
+var i=0;
+ary2=[];
+bvalue=[];
+bheader=[];
+
+  console.log(jsonData.length);
+ 
+   
+   for(i=0;i<jsonData.length;i++){
+   var dict1={};
+   dict1["Agency"]=jsonData[i].Agency
+   dict1["Address"]=jsonData[i].Address
+   dict1["County"]=jsonData[i].County
+   dict1["Total_Mu_Sigma_Score"]=jsonData[i].Total_Mu_Sigma_Score
+   //console.log(dict1["MaxLoad"])
+   ary2.push(dict1)
+   
+   //console.log(ary2[i]["MaxLoad"])   
+  }
+     
+   ary2.sort(function(a, b) {
+    return parseFloat(b.Total_Mu_Sigma_Score) - parseFloat(a.Total_Mu_Sigma_Score);
+});
+var noOfBar =3;
+if(ary2.length<3)
+noOfBar = ary2.length;
+
+for(i=0;i<noOfBar;i++){
+  bheader.push(ary2[i]["Address"]);
+  console.log(bheader);
+  bvalue.push(ary2[i]["Total_Mu_Sigma_Score"]);
+  console.log(bvalue);
+}
+
+// for dropdown
+var country =[];
+for(i=0;i<jsonData.length;i++){
+	country.push(jsonData[i]["County"]);
+}
+var uniqueCountry = getUnique(country);
+
+for(var i = 0;i<uniqueCountry.length;i++){
+	var dropdown = {};
+	dropdown.key = i+1;
+	dropdown.val = uniqueCountry[i];
+	dropDownValue.push(dropdown);
+}
+function getUnique(arrayList){
+   var u = {}, a = [];
+   for(var i = 0, l = arrayList.length; i < l; ++i){
+      if(u.hasOwnProperty(arrayList[i])) {
+         continue;
+      }
+      a.push(arrayList[i]);
+      u[arrayList[i]] = 1;
+   }
+   return a;
+}
+displayName = dropDownValue[0].val
+if(!init){
+	addData();
+}
+//document.getElementById("countyName").addEventListener("click", downdownHandler)
+};
+
+function sortData(){
+	var displayValue = document.getElementById("countyName").displayValue
+	var data = [];
+	for(var i=0; i<mainJsonData.length;i++){
+	console.log(i);
+		if(mainJsonData[i].County == displayValue){
+			data.push(mainJsonData[i]);
+		}
+	}
+	if(data.length<3){
+		alert("Cannot dispaly chart for "+ displayValue)
+	}else{
+		reqListener(data);
+	}
+}
+
+// function to append the data to the chart again
+function addData() {
+	var chart = document.getElementById('barChart');
+	
+	var table = document.getElementById('tableData');
+	
+//    setTimeout(function(){ 
+//			var oldData = chart.chartData,
+//          selectedDomain = chart.selectedDomain;
+//      data = oldData.concat(data);
+//      
+//      selectedDomain.x = [1397177400000,1397690820000];
+//      chart.set('chartData', data); 
+//      //chart.set('selectedDomain', selectedDomain);
+//    }, 3000);
+	chart.chartData = bvalue;
+	chart.legendLabels = bheader;
+	table.tableData = ary2;
+	displayName = ary2[0]["County"]
+}
+
+function downdownHandler(disName){
+ var a = 0;
+}
+	
+var oReq = new XMLHttpRequest();
+oReq.onload = reqListener;
+oReq.open("get", "https://fedjsonsample-unwetted-piton.run.aws-usw02-pr.ice.predix.io/fedjson.json", false);
+
+//oReq.setRequestHeader('Access-Control-Allow-Headers', '*');
+//oReq.setRequestHeader('Access-Control-Allow-Origin','*');
+
+oReq.send();
+console.log("Sucess")
+
+//console.log(ary2[1]["MaxLoad"])	 
+	//window.alert(ary[0].y)		
+    Polymer({
+      is: 'blankpage-view',
+      properties: {
+	          valueserve: {
+          type: Array,
+          value: function() {
+            return bvalue
+          }
+        },
+		datatab: {
+          type: Array,
+          value: function() {
+            return ary2
+          }
+        },
+		headerserve: {
+          type: Array,
+          value: function() {
+            return bheader
+          }
+        },
+		dropDownVal:{
+          type: Array,
+          value: function() {
+            return dropDownValue
+          }
+        },
+		disName:{
+          type: String,
+          value: function() {
+            return displayName
+          }
+		},
+		downdownHandler : {
+			type: String,
+			value: function(){
+				return downdownHandler
+			}
+		}
+	  },
+      ready: function() {
+        console.log('blankpage-view ready()')
+      }
+    });
+	</script>
+  
+</dom-module>
